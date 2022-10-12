@@ -6,12 +6,16 @@ Read a typical text file into a string or vector of strings.
 
 * `file_into_strings(file: File) -> std::io::Result<Vec<String>>`
 
-Use this Rust crate:
+You can use this Rust crate:
 
 ```toml
 [dependencies]
 file_into_string = "*"
 ```
+
+Or if you prefer, you can copy the source code into your own program.
+The code is short, easy to understand, and easy to change as you like.
+
 
 Examples:
 
