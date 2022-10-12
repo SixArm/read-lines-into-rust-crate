@@ -45,6 +45,18 @@ so you can copy them into your own code if you wish.
 If you're reading very large files, then you may prefer
 to write your own code to process each line as it's read.
 
+## FAQ
+
+### Why use this instead of the Rust `BufRead lines()` function?
+
+A. Because we have use cases where we must preserve line endings.
+
+### Why publish this as a crate?
+
+Because we want to make it easy to use, and easy to show as examples
+for developers who are learning how to program using Rust.
+
+
 ## Tracking
 
 * Project: file-into-string-rust-crate
