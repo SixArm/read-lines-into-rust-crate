@@ -14,7 +14,6 @@
 //! ```
 //! 
 //! Or if you prefer, you can copy the source code into your own program.
-//! The code is short, easy to understand, and easy to change as you like.
 //! 
 //! Examples:
 //! 
