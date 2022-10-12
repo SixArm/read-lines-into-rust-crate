@@ -56,6 +56,14 @@ Because we have use cases where we must preserve line endings.
 Because we want to make it easy to use, and easy to show as examples
 for developers who are learning how to program using Rust.
 
+### What are alternatives to consider?
+
+See Rust `std::io::BufRead` and its function `lines()`.
+
+See Rust `std::include_str` and its macro `include_string!`.
+
+See Rust crate `load_file::load_str` and its macro `load_str!`.
+
 
 ## Tracking
 
