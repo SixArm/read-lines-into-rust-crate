@@ -62,7 +62,7 @@ See Rust `std::io::BufRead` and its function `lines()`.
 
 See Rust `std::include_str` and its macro `include_string!`.
 
-See Rust crate `load_file::load_str` and its macro `load_str!`.
+See Rust crate `load_file` and its macro `load_str!`.
 
 
 ## Tracking
