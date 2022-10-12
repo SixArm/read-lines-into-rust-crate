@@ -60,9 +60,9 @@ for developers who are learning how to program using Rust.
 ## Tracking
 
 * Project: file-into-string-rust-crate
-* Version: 1.0.0
+* Version: 1.1.0
 * Created: 2022-10-01T22:58:34Z
-* Updated: 2022-10-12T21:15:45Z
+* Updated: 2022-10-12T21:56:45Z
 * Website: https://github.com/sixarm/file-into-string-rust-crate
 * Contact: Joel Parker Henderson <joel@joelparkerhenderson.com>
 * License: MIT OR Apache-2.0 OR GPL-2.0 OR GPL-3.0

@@ -48,9 +48,9 @@
 //! ## Tracking
 //! 
 //! * Project: file-into-string-rust-crate
-//! * Version: 1.0.0
+//! * Version: 1.1.0
 //! * Created: 2022-10-01T22:58:34Z
-//! * Updated: 2022-10-12T21:15:45Z
+//! * Updated: 2022-10-12T21:56:45Z
 //! * Website: https://github.com/sixarm/file-into-string-rust-crate
 //! * Contact: Joel Parker Henderson <joel@joelparkerhenderson.com>
 //! * License: MIT OR Apache-2.0 OR GPL-2.0 OR GPL-3.0
@@ -76,7 +76,9 @@ pub fn file_into_string(file: File) -> ::std::io::Result<String> {
     let mut string = String::new();
     let mut reader = BufReader::new(file);
     let mut buf = String::new();
-    while let Ok(n) = reader.read_line(&mut buf) {
+    let mut n: usize;
+    loop {
+        n = reader.read_line(&mut buf)?;
         if n == 0 { break; }
         string.push_str(&buf);
         buf.clear();
@@ -101,7 +103,9 @@ pub fn file_into_strings(file: File) -> ::std::io::Result<Vec<String>> {
     let mut strings = Vec::<String>::new();
     let mut reader = BufReader::new(file);
     let mut buf = String::new();
-    while let Ok(n) = reader.read_line(&mut buf) {
+    let mut n: usize;
+    loop {
+        n = reader.read_line(&mut buf)?;
         if n == 0 { break; }
         strings.push(buf.clone());
         buf.clear();
