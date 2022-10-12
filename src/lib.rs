@@ -48,7 +48,7 @@
 //! ## Tracking
 //! 
 //! * Project: file-into-string-rust-crate
-//! * Version: 1.1.0
+//! * Version: 1.1.1
 //! * Created: 2022-10-01T22:58:34Z
 //! * Updated: 2022-10-12T21:56:45Z
 //! * Website: https://github.com/sixarm/file-into-string-rust-crate

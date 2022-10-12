@@ -1,6 +1,6 @@
 [package]
 name = "file_into_string"
-version = "1.1.0"
+version = "1.1.1"
 edition = "2021"
 authors = ["Joel Parker Henderson <joel@joelparkerhenderson.com>"]
 description = "file_into_string: Rust crate of utility functions to read a file into a string, or a vector of strings, and preserving line endings."

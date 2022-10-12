@@ -49,7 +49,7 @@ to write your own code to process each line as it's read.
 
 ### Why use this instead of the Rust `BufRead lines()` function?
 
-A. Because we have use cases where we must preserve line endings.
+Because we have use cases where we must preserve line endings.
 
 ### Why publish this as a crate?
 
@@ -60,7 +60,7 @@ for developers who are learning how to program using Rust.
 ## Tracking
 
 * Project: file-into-string-rust-crate
-* Version: 1.1.0
+* Version: 1.1.1
 * Created: 2022-10-01T22:58:34Z
 * Updated: 2022-10-12T21:56:45Z
 * Website: https://github.com/sixarm/file-into-string-rust-crate
