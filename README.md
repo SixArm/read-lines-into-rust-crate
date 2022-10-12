@@ -12,13 +12,13 @@ Examples:
 use std::fs::File;
 use file_into_string::*;
 
-// Open an existing text file; read the file into one string.
-let file: File = File::open("example.txt").unwrap();
-let string: String = file_into_string(file).unwrap();
+// Open an existing text file; read the File into a String.
+let file = File::open("example.txt").unwrap();
+let string = file_into_string(file).unwrap();
  
-// Open an existing text file; read the file into a vector of strings.
-let file: File = File::open("example.txt").unwrap();
-let strings: Vec<String> = file_into_strings(file).unwrap();
+// Open an existing text file; read the File into a Vec<String>.
+let file = File::open("example.txt").unwrap();
+let strings = file_into_strings(file).unwrap();
 ```
 
 ## Install
