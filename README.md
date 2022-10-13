@@ -1,25 +1,34 @@
-# file_into_string Rust crate
+# file_lines_into_string Rust crate
 
 Read a typical text file into a string or vector of strings.
 
-* `file_into_string(file: File) -> std::io::Result<String>`
-
-* `file_into_strings(file: File) -> std::io::Result<Vec<String>>`
-
-Examples:
+Example:
 
 ```rust
 use std::fs::File;
-use file_into_string::*;
+use file_lines_into_string::*;
 
-// Open an existing text file; read the File into a String.
+// Open an existing text file.
 let file = File::open("example.txt").unwrap();
-let string = file_into_string(file).unwrap();
- 
-// Open an existing text file; read the File into a Vec<String>.
-let file = File::open("example.txt").unwrap();
-let strings = file_into_strings(file).unwrap();
+
+// Read the File lines into a String.
+let string = file_lines_into_string(file).unwrap();
 ```
+
+## Functions
+
+* `file_lines_into_string(file: File) -> std::io::Result<String>`
+
+* `file_lines_into_string_clip(file: File) -> std::io::Result<String>`
+
+* `file_lines_into_string_trim(file: File) -> std::io::Result<String>`
+
+* `file_lines_into_strings(file: File) -> std::io::Result<Vec<String>>`
+
+* `file_lines_into_strings_clip(file: File) -> std::io::Result<Vec<String>>`
+
+* `file_lines_into_strings_trip(file: File) -> std::io::Result<Vec<String>>`
+
 
 ## Install
 
@@ -27,7 +36,7 @@ You can use this Rust crate:
 
 ```toml
 [dependencies]
-file_into_string = "*"
+file_lines_into_string = "*"
 ```
 
 Or if you prefer, you can copy the source code into your own program.
@@ -45,6 +54,14 @@ so you can copy them into your own code if you wish.
 If you're reading very large files, then you may prefer
 to write your own code to process each line as it's read.
 
+## Line endings using LF and CRLF
+ 
+Unix systems typically end text lines with `\n` LINE FEED (LF).
+
+Windows systems typically end text lines with `\r` CARRIAGE RETURN (CR)
+then and `\n` LINE FEED (LF).
+
+
 ## FAQ
 
 ### Why use this instead of the Rust `BufRead lines()` function?
@@ -58,12 +75,13 @@ for developers who are learning how to program using Rust.
 
 ### What are alternatives to consider?
 
-See Rust `std::io::BufRead` and its function `lines()`.
+Rust `std::io::BufRead` and its function `lines()`.
 
-See Rust `std::include_str` and its macro `include_string!`.
+Rust `std::include_str` and its macro `include_string!`.
 
-See Rust crate `load_file` and its macro `load_str!`.
+Rust crate `load_file` and its macro `load_str!`.
 
+Rust `std::fs::read_to_string(file_name).unwrap().lines()`.
 
 ## Tracking
 
