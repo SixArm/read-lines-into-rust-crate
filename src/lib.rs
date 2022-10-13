@@ -1,35 +1,35 @@
-//! # file_lines_into_string Rust crate
+//! # read_lines_into_string Rust crate
 //! 
-//! Read a typical text file into a string or vector of strings.
+//! Read lines of a Path, File, BufRead, into a String or Vec<String>.
 //! 
 //! Examples:
 //! 
 //! ```rust
 //! use std::fs::File;
-//! use file_lines_into_string::*;
+//! use read_lines_into_string::*;
 //! 
 //! // Open an existing text file; read the File into a String.
 //! let file = File::open("example.txt").unwrap();
-//! let string = file_lines_into_string(file).unwrap();
+//! let string = read_lines_from_file_into_string(file).unwrap();
 //! 
 //! // Open an existing text file; read the File into a Vec<String>.
 //! let file = File::open("example.txt").unwrap();
-//! let strings = file_lines_into_strings(file).unwrap();
+//! let strings = read_lines_from_file_into_strings(file).unwrap();
 //! ```
 //! 
 //! ## Functions
 //! 
-//! * `file_lines_into_string(file: File) -> std::io::Result<String>`
+//! * `read_lines_from_file_into_string(file: File) -> std::io::Result<String>`
 //! 
-//! * `file_lines_into_string_clip(file: File) -> std::io::Result<String>`
+//! * `read_lines_from_file_into_string_clip(file: File) -> std::io::Result<String>`
 //! 
-//! * `file_lines_into_string_trim(file: File) -> std::io::Result<String>`
+//! * `read_lines_from_file_into_string_trim(file: File) -> std::io::Result<String>`
 //! 
-//! * `file_lines_into_strings(file: File) -> std::io::Result<Vec<String>>`
+//! * `read_lines_from_file_into_strings(file: File) -> std::io::Result<Vec<String>>`
 //! 
-//! * `file_lines_into_strings_clip(file: File) -> std::io::Result<Vec<String>>`
+//! * `read_lines_from_file_into_strings_clip(file: File) -> std::io::Result<Vec<String>>`
 //! 
-//! * `file_lines_into_strings_trip(file: File) -> std::io::Result<Vec<String>>`
+//! * `read_lines_from_file_into_strings_trip(file: File) -> std::io::Result<Vec<String>>`
 //! 
 //! ## Install
 //! 
@@ -37,7 +37,7 @@
 //! 
 //! ```toml
 //! [dependencies]
-//! file_lines_into_string = "*"
+//! read_lines_from_file_into_string = "*"
 //! ```
 //! 
 //! Or if you prefer, you can copy the source code into your own program.
@@ -72,22 +72,58 @@
 use std::fs::File;
 use std::io::BufRead;
 use std::io::BufReader;
+use std::path::Path;
 
-/// Read File lines into a String; keep each line end `\n` or `\r\n`.
+/// Read lines from Path into String; keep each line end `\n` or `\r\n`.
 /// 
 /// ```
+/// use std::path::Path;
 /// use std::fs::File;
-/// use file_lines_into_string::*;
+/// use read_lines_into_string::*;
 /// 
-/// let file: File = File::open("example.txt").unwrap();
-/// let string: String = file_lines_into_string(file).unwrap();
+/// let path = Path::new("example.txt");
+/// let string: String = read_lines_from_path_into_string(path).unwrap();
 /// ```
 /// 
 /// Any error will return immediately.
 /// 
-pub fn file_lines_into_string(file: File) -> ::std::io::Result<String> {
+pub fn read_lines_from_path_into_string(path: &Path) -> ::std::io::Result<String> {
+    let file = File::open(path)?;
+    read_lines_from_file_into_string(file)
+}
+/// Read lines from File into String; keep each line end `\n` or `\r\n`.
+/// 
+/// ```
+/// use std::fs::File;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example.txt").unwrap();
+/// let string: String = read_lines_from_file_into_string(file).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_from_file_into_string(file: File) -> ::std::io::Result<String> {
+    let reader = BufReader::new(file);
+    read_lines_into_string(reader)
+}
+
+/// Read lines from BufRead into String; keep each line end `\n` or `\r\n`.
+/// 
+/// ```
+/// use std::fs::File;
+/// use std::io::BufReader;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example.txt").unwrap();
+/// let mut reader = BufReader::new(file);
+/// let string: String = read_lines_into_string(reader).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_into_string(mut reader: impl BufRead) -> ::std::io::Result<String> {
     let mut string = String::new();
-    let mut reader = BufReader::new(file);
     let mut buf = String::new();
     let mut n: usize;
     loop {
@@ -99,21 +135,58 @@ pub fn file_lines_into_string(file: File) -> ::std::io::Result<String> {
     Ok(string)
 }
 
-/// Read File lines into a String; clip each line end `\n` or `\r\n`.
+/// Read lines from Path into String; clip each line end `\n` or `\r\n`.
 /// 
 /// ```
+/// use std::path::Path;
 /// use std::fs::File;
-/// use file_lines_into_string::*;
+/// use read_lines_into_string::*;
 /// 
-/// let file: File = File::open("example.txt").unwrap();
-/// let string: String = file_lines_into_string_clip(file).unwrap();
+/// let path = Path::new("example.txt");
+/// let string: String = read_lines_from_path_into_string_clip(path).unwrap();
 /// ```
 /// 
 /// Any error will return immediately.
 /// 
-pub fn file_lines_into_string_clip(file: File) -> ::std::io::Result<String> { 
+pub fn read_lines_from_path_into_string_clip(path: &Path) -> ::std::io::Result<String> { 
+    let file = File::open(path)?;
+    read_lines_from_file_into_string_clip(file)
+}
+
+/// Read lines from File into String; clip each line end `\n` or `\r\n`.
+/// 
+/// ```
+/// use std::fs::File;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example.txt").unwrap();
+/// let string: String = read_lines_from_file_into_string_clip(file).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_from_file_into_string_clip(file: File) -> ::std::io::Result<String> { 
+    let reader = std::io::BufReader::new(file);
+    read_lines_into_string_clip(reader)
+}
+
+/// Read lines from BufRead into String; clip each line end `\n` or `\r\n`.
+/// 
+/// ```
+/// use std::fs::File;
+/// use std::io::BufReader;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example.txt").unwrap();
+/// let mut reader = BufReader::new(file);
+/// let string: String = read_lines_into_string_clip(reader).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_into_string_clip(reader: impl BufRead) -> ::std::io::Result<String> { 
     let mut string = String::new();
-    let lines = std::io::BufReader::new(file).lines();
+    let lines = reader.lines();
     for line in lines {
         let x = line?;
         string.push_str(&x);
@@ -121,21 +194,58 @@ pub fn file_lines_into_string_clip(file: File) -> ::std::io::Result<String> {
     Ok(string)
 }
 
-/// Read File lines into a String; trim each line of whitespace.
+/// Read lines from Path into String; trim each line of whitespace.
 /// 
 /// ```
+/// use std::path::Path;
 /// use std::fs::File;
-/// use file_lines_into_string::*;
+/// use read_lines_into_string::*;
 /// 
-/// let file: File = File::open("example.txt").unwrap();
-/// let string: String = file_lines_into_string_trim(file).unwrap();
+/// let path = Path::new("example.txt");
+/// let string: String = read_lines_from_path_into_string_trim(path).unwrap();
 /// ```
 /// 
 /// Any error will return immediately.
 /// 
-pub fn file_lines_into_string_trim(file: File) -> ::std::io::Result<String> { 
+pub fn read_lines_from_path_into_string_trim(path: &Path) -> ::std::io::Result<String> { 
+    let file = File::open(path)?;
+    read_lines_from_file_into_string_trim(file)
+}
+
+/// Read lines from File into String; trim each line of whitespace.
+/// 
+/// ```
+/// use std::fs::File;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example.txt").unwrap();
+/// let string: String = read_lines_from_file_into_string_trim(file).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_from_file_into_string_trim(file: File) -> ::std::io::Result<String> { 
+    let reader = std::io::BufReader::new(file);
+    read_lines_into_string_trim(reader)
+}
+
+/// Read lines from BufRead into String; trim each line of whitespace.
+/// 
+/// ```
+/// use std::fs::File;
+/// use std::io::BufReader;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example.txt").unwrap();
+/// let mut reader = BufReader::new(file);
+/// let string: String = read_lines_into_string_trim(reader).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_into_string_trim(reader: impl BufRead) -> ::std::io::Result<String> { 
     let mut string = String::new();
-    let lines = std::io::BufReader::new(file).lines();
+    let lines = reader.lines();
     for line in lines {
         let x = line?;
         string.push_str(&x.trim());
@@ -143,21 +253,57 @@ pub fn file_lines_into_string_trim(file: File) -> ::std::io::Result<String> {
     Ok(string)
 }
 
-/// Read File lines into a Vec<String>; keep each line end `\n` or `\r\n`.
+/// Read lines from Path into Vec<String>; keep each line end `\n` or `\r\n`.
 /// 
 /// ```
+/// use std::path::Path;
 /// use std::fs::File;
-/// use file_lines_into_string::*;
+/// use read_lines_into_string::*;
 /// 
-/// let file: File = File::open("example.txt").unwrap();
-/// let strings: Vec<String> = file_lines_into_strings(file).unwrap();
+/// let path = Path::new("example.txt");
+/// let strings: Vec<String> = read_lines_from_path_into_strings(path).unwrap();
 /// ```
 /// 
 /// Any error will return immediately.
 /// 
-pub fn file_lines_into_strings(file: File) -> ::std::io::Result<Vec<String>> {
+pub fn read_lines_from_path_into_strings(path: &Path) -> ::std::io::Result<Vec<String>> {
+    let file = File::open(path)?;
+    read_lines_from_file_into_strings(file)
+}
+
+/// Read lines from File into Vec<String>; keep each line end `\n` or `\r\n`.
+/// 
+/// ```
+/// use std::fs::File;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example.txt").unwrap();
+/// let strings: Vec<String> = read_lines_from_file_into_strings(file).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_from_file_into_strings(file: File) -> ::std::io::Result<Vec<String>> {
+    let reader = BufReader::new(file);
+    read_lines_into_strings(reader)
+}
+
+/// Read lines from BufRead into Vec<String>; keep each line end `\n` or `\r\n`.
+/// 
+/// ```
+/// use std::fs::File;
+/// use std::io::BufReader;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example.txt").unwrap();
+/// let mut reader = BufReader::new(file);
+/// let strings: Vec<String> = read_lines_into_strings(reader).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_into_strings(mut reader: impl BufRead) -> ::std::io::Result<Vec<String>> {
     let mut strings = Vec::<String>::new();
-    let mut reader = BufReader::new(file);
     let mut buf = String::new();
     let mut n: usize;
     loop {
@@ -169,21 +315,58 @@ pub fn file_lines_into_strings(file: File) -> ::std::io::Result<Vec<String>> {
     Ok(strings)
 }
 
-/// Read File lines into a Vec<String>; clip each line end `\n` or `\r\n`.
+/// Read lines from Path into Vec<String>; clip each line end `\n` or `\r\n`.
 /// 
 /// ```
+/// use std::path::Path;
 /// use std::fs::File;
-/// use file_lines_into_string::*;
+/// use read_lines_into_string::*;
 /// 
-/// let file: File = File::open("example.txt").unwrap();
-/// let strings: Vec<String> = file_lines_into_strings(file).unwrap();
+/// let path = Path::new("example.txt");
+/// let strings: Vec<String> = read_lines_from_path_into_strings(path).unwrap();
 /// ```
 /// 
 /// Any error will return immediately.
 /// 
-pub fn file_lines_into_strings_clip(file: File) -> ::std::io::Result<Vec<String>> { 
+pub fn read_lines_from_path_into_strings_clip(path: &Path) -> ::std::io::Result<Vec<String>> { 
+    let file = File::open(path)?;
+    read_lines_from_file_into_strings_clip(file)
+}
+
+/// Read lines from File into Vec<String>; clip each line end `\n` or `\r\n`.
+/// 
+/// ```
+/// use std::fs::File;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example.txt").unwrap();
+/// let strings: Vec<String> = read_lines_from_file_into_strings(file).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_from_file_into_strings_clip(file: File) -> ::std::io::Result<Vec<String>> { 
+    let reader = std::io::BufReader::new(file);
+    read_lines_into_strings_clip(reader)
+}
+
+/// Read lines from BufRead into Vec<String>; clip each line end `\n` or `\r\n`.
+/// 
+/// ```
+/// use std::fs::File;
+/// use std::io::BufReader;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example.txt").unwrap();
+/// let mut reader = BufReader::new(file);
+/// let strings: Vec<String> = read_lines_into_strings(reader).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_into_strings_clip(reader: impl BufRead) -> ::std::io::Result<Vec<String>> { 
     let mut strings = Vec::<String>::new();
-    let lines = std::io::BufReader::new(file).lines();
+    let lines = reader.lines();
     for line in lines {
         let x = line?;
         strings.push(x);
@@ -191,21 +374,58 @@ pub fn file_lines_into_strings_clip(file: File) -> ::std::io::Result<Vec<String>
     Ok(strings)
 }
 
-/// Read File lines into a Vec<String>; trim each line of whitepace.
+/// Read lines from Path into Vec<String>; trim each line of whitepace.
 /// 
 /// ```
+/// use std::path::Path;
 /// use std::fs::File;
-/// use file_lines_into_string::*;
+/// use read_lines_into_string::*;
 /// 
-/// let file: File = File::open("example-with-indent.txt").unwrap();
-/// let strings: Vec<String> = file_lines_into_strings_trim(file).unwrap();
+/// let path = Path::new("example.txt");
+/// let strings: Vec<String> = read_lines_from_path_into_strings_trim(path).unwrap();
 /// ```
 /// 
 /// Any error will return immediately.
 /// 
-pub fn file_lines_into_strings_trim(file: File) -> ::std::io::Result<Vec<String>> { 
+pub fn read_lines_from_path_into_strings_trim(path: &Path) -> ::std::io::Result<Vec<String>> { 
+    let file = File::open(path)?;
+    read_lines_from_file_into_strings_trim(file)
+}
+
+/// Read lines from File into Vec<String>; trim each line of whitepace.
+/// 
+/// ```
+/// use std::fs::File;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example-with-indent.txt").unwrap();
+/// let strings: Vec<String> = read_lines_from_file_into_strings_trim(file).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_from_file_into_strings_trim(file: File) -> ::std::io::Result<Vec<String>> { 
+    let reader = std::io::BufReader::new(file);
+    read_lines_into_strings_trim(reader)
+}
+
+/// Read lines from BufRead into Vec<String>; trim each line of whitepace.
+/// 
+/// ```
+/// use std::fs::File;
+/// use std::io::BufReader;
+/// use read_lines_into_string::*;
+/// 
+/// let file: File = File::open("example-with-indent.txt").unwrap();
+/// let mut reader = BufReader::new(file);
+/// let strings: Vec<String> = read_lines_into_strings_trim(reader).unwrap();
+/// ```
+/// 
+/// Any error will return immediately.
+/// 
+pub fn read_lines_into_strings_trim(reader: impl BufRead) -> ::std::io::Result<Vec<String>> { 
     let mut strings = Vec::<String>::new();
-    let lines = std::io::BufReader::new(file).lines();
+    let lines = reader.lines();
     for line in lines {
         let x = line?;
         strings.push(String::from(x.trim()));
@@ -216,140 +436,295 @@ pub fn file_lines_into_strings_trim(file: File) -> ::std::io::Result<Vec<String>
 #[cfg(test)]
 mod tests {
     use super::*;
+    use std::io::BufReader;
+    use std::path::Path;
 
-    #[test]
-    fn test_file_lines_into_string() {
-        let file = std::fs::File::open("example.txt").unwrap();
-        let s = file_lines_into_string(file).unwrap();
-        assert_eq!(s, "lorem\nipsum\n");
+    mod read_lines_into_string_x_main {
+        use super::*;
+
+        fn path() -> &'static Path { Path::new("example.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> &'static str { "lorem\nipsum\n" }
+
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_string(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_string(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_string(path()).unwrap(), expect());
+        }
     }
 
-    #[test]
-    fn test_file_lines_into_string_x_crlf() {
-        let file = std::fs::File::open("example-with-crlf.txt").unwrap();
-        let s = file_lines_into_string(file).unwrap();
-        assert_eq!(s, "lorem\r\nipsum\r\n");
+    mod read_lines_into_string_x_crlf {
+        use super::*;
+
+        fn path() -> &'static Path { Path::new("example-with-crlf.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> &'static str { "lorem\r\nipsum\r\n" }
+
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_string(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_string(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_string(path()).unwrap(), expect());
+        }
     }
 
-    #[test]
-    fn test_file_lines_into_string_x_indent() {
-        let file = std::fs::File::open("example-with-indent.txt").unwrap();
-        let s = file_lines_into_string(file).unwrap();
-        assert_eq!(s, "    lorem\n    ipsum\n");
+    mod read_lines_into_string_x_indent {
+        use super::*;
+
+        fn path() -> &'static Path { Path::new("example-with-indent.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> &'static str { "    lorem\n    ipsum\n" }
+
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_string(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_string(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_string(path()).unwrap(), expect());
+        }
     }
 
-    #[test]
-    fn test_file_lines_into_string_clip() {
-        let file = std::fs::File::open("example.txt").unwrap();
-        let s = file_lines_into_string_clip(file).unwrap();
-        assert_eq!(s, "loremipsum");
+    mod read_lines_into_string_clip_x_main {
+        use super::*;
+
+        fn path() -> &'static Path { Path::new("example.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> &'static str { "loremipsum" }
+        
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_string_clip(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_string_clip(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_string_clip(path()).unwrap(), expect());
+        }
     }
 
-    #[test]
-    fn test_file_lines_into_string_clip_x_crlf() {
-        let file = std::fs::File::open("example-with-crlf.txt").unwrap();
-        let s = file_lines_into_string_clip(file).unwrap();
-        assert_eq!(s, "loremipsum");
+    mod read_lines_into_string_clip_x_crlf {
+        use super::*;
+
+        fn path() -> &'static Path { Path::new("example-with-crlf.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> &'static str { "loremipsum" }
+        
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_string_clip(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_string_clip(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_string_clip(path()).unwrap(), expect());
+        }
     }
 
-    #[test]
-    fn test_file_lines_into_string_clip_x_indent() {
-        let file = std::fs::File::open("example-with-indent.txt").unwrap();
-        let s = file_lines_into_string_clip(file).unwrap();
-        assert_eq!(s, "    lorem    ipsum");
+    mod read_lines_into_string_clip_x_indent {
+        use super::*;
+
+        fn path() -> &'static Path { Path::new("example-with-indent.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> &'static str { "    lorem    ipsum" }
+        
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_string_clip(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_string_clip(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_string_clip(path()).unwrap(), expect());
+        }
     }
 
-    #[test]
-    fn test_file_lines_into_string_trim() {
-        let file = std::fs::File::open("example.txt").unwrap();
-        let s = file_lines_into_string_clip(file).unwrap();
-        assert_eq!(s, "loremipsum");
+    mod read_lines_into_string_trim_x_main {
+        use super::*;
+    
+        fn path() -> &'static Path { Path::new("example.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> &'static str { "loremipsum" }
+        
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_string_trim(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_string_trim(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_string_trim(path()).unwrap(), expect());
+        }
+    }
+    
+    mod read_lines_into_string_trim_x_crlf {
+        use super::*;
+    
+        fn path() -> &'static Path { Path::new("example-with-crlf.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> &'static str { "loremipsum" }
+        
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_string_trim(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_string_trim(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_string_trim(path()).unwrap(), expect());
+        }
+    }
+    
+    mod read_lines_into_string_trim_x_indent {
+        use super::*;
+    
+        fn path() -> &'static Path { Path::new("example-with-indent.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> &'static str { "loremipsum" }
+        
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_string_trim(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_string_trim(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_string_trim(path()).unwrap(), expect());
+        }
+    }
+    
+    mod read_lines_into_strings_x_main {
+        use super::*;
+
+        fn path() -> &'static Path { Path::new("example.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> Vec<String> { vec![String::from("lorem\n"), String::from("ipsum\n")] }
+
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_strings(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_strings(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_strings(path()).unwrap(), expect());
+        }
     }
 
-    #[test]
-    fn test_file_lines_into_string_trim_x_crlf() {
-        let file = std::fs::File::open("example-with-crlf.txt").unwrap();
-        let s = file_lines_into_string_clip(file).unwrap();
-        assert_eq!(s, "loremipsum");
+    mod read_lines_into_strings_x_crlf {
+        use super::*;
+
+        fn path() -> &'static Path { Path::new("example-with-crlf.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> Vec<String> { vec![String::from("lorem\r\n"), String::from("ipsum\r\n")] }
+
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_strings(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_strings(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_strings(path()).unwrap(), expect());
+        }
     }
 
-    #[test]
-    fn test_file_lines_into_string_trim_x_indent() {
-        let file = std::fs::File::open("example-with-indent.txt").unwrap();
-        let s = file_lines_into_string_trim(file).unwrap();
-        assert_eq!(s, "loremipsum");
+    mod read_lines_into_strings_x_indent {
+        use super::*;
+
+        fn path() -> &'static Path { Path::new("example-with-indent.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> Vec<String> { vec![String::from("    lorem\n"), String::from("    ipsum\n")] }
+
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_strings(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_strings(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_strings(path()).unwrap(), expect());
+        }
     }
 
-    #[test]
-    fn test_file_lines_into_strings() {
-        let file = std::fs::File::open("example.txt").unwrap();
-        let actual_strings = file_lines_into_strings(file).unwrap();
-        let expect_strings = vec![String::from("lorem\n"), String::from("ipsum\n")];
-        assert_eq!(actual_strings, expect_strings);
+    mod read_lines_into_strings_clip_x_main {
+        use super::*;
+    
+        fn path() -> &'static Path { Path::new("example.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> Vec<String> { vec![String::from("lorem"), String::from("ipsum")] }
+    
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_strings_clip(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_strings_clip(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_strings_clip(path()).unwrap(), expect());
+        }
+    }
+    
+    mod read_lines_into_strings_clip_x_crlf {
+        use super::*;
+    
+        fn path() -> &'static Path { Path::new("example-with-crlf.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> Vec<String> { vec![String::from("lorem"), String::from("ipsum")] }
+    
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_strings_clip(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_strings_clip(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_strings_clip(path()).unwrap(), expect());
+        }
+    }
+    
+    mod read_lines_into_strings_clip_x_indent {
+        use super::*;
+    
+        fn path() -> &'static Path { Path::new("example-with-indent.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> Vec<String> { vec![String::from("    lorem"), String::from("    ipsum")] }
+    
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_strings_clip(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_strings_clip(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_strings_clip(path()).unwrap(), expect());
+        }
     }
 
-    #[test]
-    fn test_file_lines_into_strings_x_crlf() {
-        let file = std::fs::File::open("example-with-crlf.txt").unwrap();
-        let actual_strings = file_lines_into_strings(file).unwrap();
-        let expect_strings = vec![String::from("lorem\r\n"), String::from("ipsum\r\n")];
-        assert_eq!(actual_strings, expect_strings);
+    mod read_lines_into_strings_trim_x_main {
+        use super::*;
+    
+        fn path() -> &'static Path { Path::new("example.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> Vec<String> { vec![String::from("lorem"), String::from("ipsum")] }
+    
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_strings_trim(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_strings_trim(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_strings_trim(path()).unwrap(), expect());
+        }
     }
-
-    #[test]
-    fn test_file_lines_into_strings_x_indent() {
-        let file = std::fs::File::open("example-with-indent.txt").unwrap();
-        let actual_strings = file_lines_into_strings(file).unwrap();
-        let expect_strings = vec![String::from("    lorem\n"), String::from("    ipsum\n")];
-        assert_eq!(actual_strings, expect_strings);
+    
+    mod read_lines_into_strings_trim_x_crlf {
+        use super::*;
+    
+        fn path() -> &'static Path { Path::new("example-with-crlf.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> Vec<String> { vec![String::from("lorem"), String::from("ipsum")] }
+    
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_strings_trim(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_strings_trim(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_strings_trim(path()).unwrap(), expect());
+        }
     }
-
-    #[test]
-    fn test_file_lines_into_strings_clip() {
-        let file = std::fs::File::open("example.txt").unwrap();
-        let actual_strings = file_lines_into_strings_clip(file).unwrap();
-        let expect_strings = vec![String::from("lorem"), String::from("ipsum")];
-        assert_eq!(actual_strings, expect_strings);
+    
+    mod read_lines_into_strings_trim_x_indent {
+        use super::*;
+    
+        fn path() -> &'static Path { Path::new("example-with-indent.txt") }
+        fn file() -> File { std::fs::File::open(path()).unwrap() }
+        fn reader() -> impl BufRead { BufReader::new(file()) }
+        fn expect() -> Vec<String> { vec![String::from("lorem"), String::from("ipsum")] }
+    
+        #[test]
+        fn test() {
+            assert_eq!(read_lines_into_strings_trim(reader()).unwrap(), expect());
+            assert_eq!(read_lines_from_file_into_strings_trim(file()).unwrap(), expect());
+            assert_eq!(read_lines_from_path_into_strings_trim(path()).unwrap(), expect());
+        }
     }
-
-    #[test]
-    fn test_file_lines_into_strings_clip_x_crlf() {
-        let file = std::fs::File::open("example-with-crlf.txt").unwrap();
-        let actual_strings = file_lines_into_strings_clip(file).unwrap();
-        let expect_strings = vec![String::from("lorem"), String::from("ipsum")];
-        assert_eq!(actual_strings, expect_strings);
-    }
-
-    #[test]
-    fn test_file_lines_into_strings_clip_indent() {
-        let file = std::fs::File::open("example-with-indent.txt").unwrap();
-        let actual_strings = file_lines_into_strings_clip(file).unwrap();
-        let expect_strings = vec![String::from("    lorem"), String::from("    ipsum")];
-        assert_eq!(actual_strings, expect_strings);
-    }
-
-    #[test]
-    fn test_file_lines_into_strings_trim() {
-        let file = std::fs::File::open("example.txt").unwrap();
-        let actual_strings = file_lines_into_strings_trim(file).unwrap();
-        let expect_strings = vec![String::from("lorem"), String::from("ipsum")];
-        assert_eq!(actual_strings, expect_strings);
-    }
-
-    #[test]
-    fn test_file_lines_into_strings_trim_x_crlf() {
-        let file = std::fs::File::open("example-with-crlf.txt").unwrap();
-        let actual_strings = file_lines_into_strings_trim(file).unwrap();
-        let expect_strings = vec![String::from("lorem"), String::from("ipsum")];
-        assert_eq!(actual_strings, expect_strings);
-    }
-
-    #[test]
-    fn test_file_lines_into_strings_trim_x_indent() {
-        let file = std::fs::File::open("example-with-indent.txt").unwrap();
-        let actual_strings = file_lines_into_strings_trim(file).unwrap();
-        let expect_strings = vec![String::from("lorem"), String::from("ipsum")];
-        assert_eq!(actual_strings, expect_strings);
-    }
-
+    
 }

@@ -1,9 +1,9 @@
 [package]
-name = "file_lines_into_string"
-version = "1.1.1"
+name = "read_lines_into_string"
+version = "2.0.0"
 edition = "2021"
 authors = ["Joel Parker Henderson <joel@joelparkerhenderson.com>"]
-description = "file_lines_into_string: Rust crate of utility functions to read a file into a string, or a vector of strings, and preserving line endings."
+description = "read_lines_from_file_into_string: Rust crate of utility functions to read a file into a string, or a vector of strings, and preserving line endings."
 readme = "README.md"
 repository = "https://github.com/sixarm/file-into-string-rust-crate/"
 license = "MIT OR Apache-2.0 OR GPL-2.0 OR GPL-3.0"

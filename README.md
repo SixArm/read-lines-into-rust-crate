@@ -1,4 +1,4 @@
-# file_lines_into_string Rust crate
+# read_lines_from_file_into_string Rust crate
 
 Read a typical text file into a string or vector of strings.
 
@@ -6,28 +6,28 @@ Example:
 
 ```rust
 use std::fs::File;
-use file_lines_into_string::*;
+use read_lines_from_file_into_string::*;
 
 // Open an existing text file.
 let file = File::open("example.txt").unwrap();
 
 // Read the File lines into a String.
-let string = file_lines_into_string(file).unwrap();
+let string = read_lines_from_file_into_string(file).unwrap();
 ```
 
 ## Functions
 
-* `file_lines_into_string(file: File) -> std::io::Result<String>`
+* `read_lines_from_file_into_string(file: File) -> std::io::Result<String>`
 
-* `file_lines_into_string_clip(file: File) -> std::io::Result<String>`
+* `read_lines_from_file_into_string_clip(file: File) -> std::io::Result<String>`
 
-* `file_lines_into_string_trim(file: File) -> std::io::Result<String>`
+* `read_lines_from_file_into_string_trim(file: File) -> std::io::Result<String>`
 
-* `file_lines_into_strings(file: File) -> std::io::Result<Vec<String>>`
+* `read_lines_from_file_into_strings(file: File) -> std::io::Result<Vec<String>>`
 
-* `file_lines_into_strings_clip(file: File) -> std::io::Result<Vec<String>>`
+* `read_lines_from_file_into_strings_clip(file: File) -> std::io::Result<Vec<String>>`
 
-* `file_lines_into_strings_trip(file: File) -> std::io::Result<Vec<String>>`
+* `read_lines_from_file_into_strings_trip(file: File) -> std::io::Result<Vec<String>>`
 
 
 ## Install
@@ -36,7 +36,7 @@ You can use this Rust crate:
 
 ```toml
 [dependencies]
-file_lines_into_string = "*"
+read_lines_from_file_into_string = "*"
 ```
 
 Or if you prefer, you can copy the source code into your own program.
