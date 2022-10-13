@@ -19,13 +19,13 @@ let string = read_lines_from_file_into_string(file).unwrap();
 
 * `read_lines_from_file_into_string(file: File) -> std::io::Result<String>`
 
-* `read_lines_from_file_into_string_clip(file: File) -> std::io::Result<String>`
+* `read_lines_from_file_into_string_with_clip(file: File) -> std::io::Result<String>`
 
-* `read_lines_from_file_into_string_trim(file: File) -> std::io::Result<String>`
+* `read_lines_from_file_into_string_with_trim(file: File) -> std::io::Result<String>`
 
 * `read_lines_from_file_into_strings(file: File) -> std::io::Result<Vec<String>>`
 
-* `read_lines_from_file_into_strings_clip(file: File) -> std::io::Result<Vec<String>>`
+* `read_lines_from_file_into_strings_with_clip(file: File) -> std::io::Result<Vec<String>>`
 
 * `read_lines_from_file_into_strings_trip(file: File) -> std::io::Result<Vec<String>>`
 
