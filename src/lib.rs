@@ -15,7 +15,7 @@
 //! let string = path.read_lines_into_string().unwrap();
 //! 
 //! // Read lines from the path's file into a vector of strings
-//! let strings = path.read_lines_into_strings().unwrap();
+//! let strings = path.read_lines_into_vec_string().unwrap();
 //! ```
 //! 
 //! ## Install
@@ -73,23 +73,23 @@ pub mod buf_reader {
     pub mod read_lines_into_string;
     pub mod read_lines_into_string_with_clip;
     pub mod read_lines_into_string_with_trim;
-    pub mod read_lines_into_strings;
-    pub mod read_lines_into_strings_with_clip;
-    pub mod read_lines_into_strings_with_trim;
+    pub mod read_lines_into_vec_string;
+    pub mod read_lines_into_vec_string_with_clip;
+    pub mod read_lines_into_vec_string_with_trim;
 }
 pub mod file {
     pub mod read_lines_into_string;
     pub mod read_lines_into_string_with_clip;
     pub mod read_lines_into_string_with_trim;
-    pub mod read_lines_into_strings;
-    pub mod read_lines_into_strings_with_clip;
-    pub mod read_lines_into_strings_with_trim;
+    pub mod read_lines_into_vec_string;
+    pub mod read_lines_into_vec_string_with_clip;
+    pub mod read_lines_into_vec_string_with_trim;
 }
 pub mod path {
     pub mod read_lines_into_string;
     pub mod read_lines_into_string_with_clip;
     pub mod read_lines_into_string_with_trim;
-    pub mod read_lines_into_strings;
-    pub mod read_lines_into_strings_with_clip;
-    pub mod read_lines_into_strings_with_trim;
+    pub mod read_lines_into_vec_string;
+    pub mod read_lines_into_vec_string_with_clip;
+    pub mod read_lines_into_vec_string_with_trim;
 }

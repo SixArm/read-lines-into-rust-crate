@@ -2,23 +2,23 @@ use std::fs::File;
 use std::io::BufReader;
 use crate::traits::*;
 
-impl ReadLinesIntoStringsOnSelf for File {
+impl ReadLinesIntoStringsWithTrimOnSelf for File {
 
-    /// Read lines into Vec<String>; keep each line end `\n` or `\r\n`.
+    /// Read lines into Vec<String>; trim each line of whitespace.
     /// 
     /// ```
     /// use std::fs::File;
     /// use read_lines_into_string::traits::*;
     /// 
     /// let file: File = File::open("example.txt").unwrap();
-    /// let strings: Vec<String> = file.read_lines_into_strings().unwrap();
+    /// let strings: Vec<String> = file.read_lines_into_vec_string_with_trim().unwrap();
     /// ```
     /// 
     /// Any error will return immediately.
     /// 
-    fn read_lines_into_strings(self) -> ::std::io::Result<Vec<String>> {
+    fn read_lines_into_vec_string_with_trim(self) -> ::std::io::Result<Vec<String>> {
         let buf_reader = BufReader::new(self);
-        buf_reader.read_lines_into_strings()
+        buf_reader.read_lines_into_vec_string_with_trim()
     }
 
 }
@@ -35,8 +35,8 @@ mod tests {
     fn with_lf() {
         let file = sut("example.txt");
         assert_eq!(
-            file.read_lines_into_strings().unwrap(),
-            vec![String::from("lorem\n"), String::from("ipsum\n")]
+            file.read_lines_into_vec_string_with_trim().unwrap(),
+            vec![String::from("lorem"), String::from("ipsum")]
         );
     }
 
@@ -44,8 +44,8 @@ mod tests {
     fn with_crlf() {
         let file = sut("example-with-crlf.txt");
         assert_eq!(
-            file.read_lines_into_strings().unwrap(),
-            vec![String::from("lorem\r\n"), String::from("ipsum\r\n")]
+            file.read_lines_into_vec_string_with_trim().unwrap(),
+            vec![String::from("lorem"), String::from("ipsum")]
         );
     }
 
@@ -53,8 +53,8 @@ mod tests {
     fn with_indent() {
         let file = sut("example-with-indent.txt");
         assert_eq!(
-            file.read_lines_into_strings().unwrap(),
-            vec![String::from("    lorem\n"), String::from("    ipsum\n")]
+            file.read_lines_into_vec_string_with_trim().unwrap(),
+            vec![String::from("lorem"), String::from("ipsum")]
         );
     }
 

@@ -23,25 +23,25 @@ pub trait ReadLinesIntoStringWithTrimOnRefSelf {
 }
 
 pub trait ReadLinesIntoStringsOnSelf {
-    fn read_lines_into_strings(self) -> ::std::io::Result<Vec<String>>;
+    fn read_lines_into_vec_string(self) -> ::std::io::Result<Vec<String>>;
 }
 
 pub trait ReadLinesIntoStringsOnRefSelf {
-    fn read_lines_into_strings(&self) -> ::std::io::Result<Vec<String>>;
+    fn read_lines_into_vec_string(&self) -> ::std::io::Result<Vec<String>>;
 }
 
 pub trait ReadLinesIntoStringsWithClipOnSelf {
-    fn read_lines_into_strings_with_clip(self) -> ::std::io::Result<Vec<String>>;
+    fn read_lines_into_vec_string_with_clip(self) -> ::std::io::Result<Vec<String>>;
 }
 
 pub trait ReadLinesIntoStringsWithClipOnRefSelf {
-    fn read_lines_into_strings_with_clip(&self) -> ::std::io::Result<Vec<String>>;
+    fn read_lines_into_vec_string_with_clip(&self) -> ::std::io::Result<Vec<String>>;
 }
 
 pub trait ReadLinesIntoStringsWithTrimOnSelf {
-    fn read_lines_into_strings_with_trim(self) -> ::std::io::Result<Vec<String>>;
+    fn read_lines_into_vec_string_with_trim(self) -> ::std::io::Result<Vec<String>>;
 }
 
 pub trait ReadLinesIntoStringsWithTrimOnRefSelf {
-    fn read_lines_into_strings_with_trim(&self) -> ::std::io::Result<Vec<String>>;
+    fn read_lines_into_vec_string_with_trim(&self) -> ::std::io::Result<Vec<String>>;
 }

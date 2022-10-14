@@ -3,9 +3,9 @@ use std::io::BufReader;
 use std::io::BufRead;
 use crate::traits::*;
 
-impl ReadLinesIntoStringsWithClipOnSelf for BufReader<File> {
+impl ReadLinesIntoStringsWithTrimOnSelf for BufReader<File> {
 
-    /// Read lines into Vec<String>; clip each line end `\n` or `\r\n`.
+    /// Read lines into Vec<String>; trim each line of whitespace.
     /// 
     /// ```
     /// use std::fs::File;
@@ -14,17 +14,17 @@ impl ReadLinesIntoStringsWithClipOnSelf for BufReader<File> {
     /// 
     /// let file: File = File::open("example.txt").unwrap();
     /// let mut buf_reader = BufReader::new(file);
-    /// let strings: Vec<String> = buf_reader.read_lines_into_strings_with_clip().unwrap();
+    /// let strings: Vec<String> = buf_reader.read_lines_into_vec_string_with_trim().unwrap();
     /// ```
     /// 
     /// Any error will return immediately.
     /// 
-    fn read_lines_into_strings_with_clip(self) -> ::std::io::Result<Vec<String>> {
+    fn read_lines_into_vec_string_with_trim(self) -> ::std::io::Result<Vec<String>> {
         let mut strings = Vec::<String>::new();
         let lines = self.lines();
         for line in lines {
             let x = line?;
-            strings.push(x);
+            strings.push(String::from(x.trim()));
         }
         Ok(strings)
     }
@@ -43,7 +43,7 @@ mod tests {
     fn with_lf() {
         let buf_reader = sut("example.txt");
         assert_eq!(
-            buf_reader.read_lines_into_strings_with_clip().unwrap(),
+            buf_reader.read_lines_into_vec_string_with_trim().unwrap(),
             vec![String::from("lorem"), String::from("ipsum")]
         );
     }
@@ -52,7 +52,7 @@ mod tests {
     fn with_crlf() {
         let buf_reader = sut("example-with-crlf.txt");
         assert_eq!(
-            buf_reader.read_lines_into_strings_with_clip().unwrap(),
+            buf_reader.read_lines_into_vec_string_with_trim().unwrap(),
             vec![String::from("lorem"), String::from("ipsum")]
         );
     }
@@ -61,8 +61,8 @@ mod tests {
     fn with_indent() {
         let buf_reader = sut("example-with-indent.txt");
         assert_eq!(
-            buf_reader.read_lines_into_strings_with_clip().unwrap(),
-            vec![String::from("    lorem"), String::from("    ipsum")]
+            buf_reader.read_lines_into_vec_string_with_trim().unwrap(),
+            vec![String::from("lorem"), String::from("ipsum")]
         );
     }
 

@@ -14,12 +14,12 @@ impl ReadLinesIntoStringsOnSelf for BufReader<File> {
     /// 
     /// let file: File = File::open("example.txt").unwrap();
     /// let mut buf_reader = BufReader::new(file);
-    /// let strings: Vec<String> = buf_reader.read_lines_into_strings().unwrap();
+    /// let strings: Vec<String> = buf_reader.read_lines_into_vec_string().unwrap();
     /// ```
     /// 
     /// Any error will return immediately.
     /// 
-    fn read_lines_into_strings(mut self) -> ::std::io::Result<Vec<String>> {
+    fn read_lines_into_vec_string(mut self) -> ::std::io::Result<Vec<String>> {
         let mut strings = Vec::<String>::new();
         let mut buf = String::new();
         let mut n: usize;
@@ -46,7 +46,7 @@ mod tests {
     fn with_lf() {
         let buf_reader = sut("example.txt");
         assert_eq!(
-            buf_reader.read_lines_into_strings().unwrap(),
+            buf_reader.read_lines_into_vec_string().unwrap(),
             vec![String::from("lorem\n"), String::from("ipsum\n")]
         );
     }
@@ -55,7 +55,7 @@ mod tests {
     fn with_crlf() {
         let buf_reader = sut("example-with-crlf.txt");
         assert_eq!(
-            buf_reader.read_lines_into_strings().unwrap(),
+            buf_reader.read_lines_into_vec_string().unwrap(),
             vec![String::from("lorem\r\n"), String::from("ipsum\r\n")]
         );
     }
@@ -64,7 +64,7 @@ mod tests {
     fn with_indent() {
         let buf_reader = sut("example-with-indent.txt");
         assert_eq!(
-            buf_reader.read_lines_into_strings().unwrap(),
+            buf_reader.read_lines_into_vec_string().unwrap(),
             vec![String::from("    lorem\n"), String::from("    ipsum\n")]
         );
     }

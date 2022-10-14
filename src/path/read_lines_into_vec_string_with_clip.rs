@@ -12,14 +12,14 @@ impl ReadLinesIntoStringsWithClipOnRefSelf for Path {
     /// use read_lines_into_string::traits::*;
     /// 
     /// let path = Path::new("example.txt");
-    /// let strings: Vec<String> = path.read_lines_into_strings_with_clip().unwrap();
+    /// let strings: Vec<String> = path.read_lines_into_vec_string_with_clip().unwrap();
     /// ```
     /// 
     /// Any error will return immediately.
     /// 
-    fn read_lines_into_strings_with_clip(&self) -> ::std::io::Result<Vec<String>> {
+    fn read_lines_into_vec_string_with_clip(&self) -> ::std::io::Result<Vec<String>> {
         let file = File::open(&self)?;
-        file.read_lines_into_strings_with_clip()
+        file.read_lines_into_vec_string_with_clip()
     }
 
 }
@@ -32,7 +32,7 @@ mod tests {
     fn with_lf() {
         let path = Path::new("example.txt");
         assert_eq!(
-            path.read_lines_into_strings_with_clip().unwrap(), 
+            path.read_lines_into_vec_string_with_clip().unwrap(), 
             vec![String::from("lorem"), String::from("ipsum")]
         );
     }
@@ -41,7 +41,7 @@ mod tests {
     fn with_crlf() {
         let path = Path::new("example-with-crlf.txt");
         assert_eq!(
-            path.read_lines_into_strings_with_clip().unwrap(), 
+            path.read_lines_into_vec_string_with_clip().unwrap(), 
             vec![String::from("lorem"), String::from("ipsum")]
         );
     }
@@ -50,7 +50,7 @@ mod tests {
     fn with_indent() {
         let path = Path::new("example-with-indent.txt");
         assert_eq!(
-            path.read_lines_into_strings_with_clip().unwrap(),
+            path.read_lines_into_vec_string_with_clip().unwrap(),
             vec![String::from("    lorem"), String::from("    ipsum")]
         );
     }

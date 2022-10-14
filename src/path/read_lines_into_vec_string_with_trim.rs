@@ -2,9 +2,9 @@ use std::path::Path;
 use std::fs::File;
 use crate::traits::*;
 
-impl ReadLinesIntoStringsOnRefSelf for Path {
+impl ReadLinesIntoStringsWithTrimOnRefSelf for Path {
 
-    /// Read lines into Vec<String>; keep each line end `\n` or `\r\n`.
+    /// Read lines into Vec<String>; trim each line end `\n` or `\r\n`.
     /// 
     /// ```
     /// use std::path::Path;
@@ -12,14 +12,14 @@ impl ReadLinesIntoStringsOnRefSelf for Path {
     /// use read_lines_into_string::traits::*;
     /// 
     /// let path = Path::new("example.txt");
-    /// let strings: Vec<String> = path.read_lines_into_strings().unwrap();
+    /// let strings: Vec<String> = path.read_lines_into_vec_string_with_trim().unwrap();
     /// ```
     /// 
     /// Any error will return immediately.
     /// 
-    fn read_lines_into_strings(&self) -> ::std::io::Result<Vec<String>> {
+    fn read_lines_into_vec_string_with_trim(&self) -> ::std::io::Result<Vec<String>> {
         let file = File::open(&self)?;
-        file.read_lines_into_strings()
+        file.read_lines_into_vec_string_with_trim()
     }
 
 }
@@ -32,8 +32,8 @@ mod tests {
     fn with_lf() {
         let path = Path::new("example.txt");
         assert_eq!(
-            path.read_lines_into_strings().unwrap(), 
-            vec![String::from("lorem\n"), String::from("ipsum\n")]
+            path.read_lines_into_vec_string_with_trim().unwrap(), 
+            vec![String::from("lorem"), String::from("ipsum")]
         );
     }
 
@@ -41,8 +41,8 @@ mod tests {
     fn with_crlf() {
         let path = Path::new("example-with-crlf.txt");
         assert_eq!(
-            path.read_lines_into_strings().unwrap(), 
-            vec![String::from("lorem\r\n"), String::from("ipsum\r\n")]
+            path.read_lines_into_vec_string_with_trim().unwrap(), 
+            vec![String::from("lorem"), String::from("ipsum")]
         );
     }
 
@@ -50,8 +50,8 @@ mod tests {
     fn with_indent() {
         let path = Path::new("example-with-indent.txt");
         assert_eq!(
-            path.read_lines_into_strings().unwrap(),
-            vec![String::from("    lorem\n"), String::from("    ipsum\n")]
+            path.read_lines_into_vec_string_with_trim().unwrap(),
+            vec![String::from("lorem"), String::from("ipsum")]
         );
     }
 
