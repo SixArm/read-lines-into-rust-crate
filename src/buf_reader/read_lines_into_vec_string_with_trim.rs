@@ -10,7 +10,7 @@ impl ReadLinesIntoStringsWithTrimOnSelf for BufReader<File> {
     /// ```
     /// use std::fs::File;
     /// use std::io::BufReader;
-    /// use read_lines_into_string::traits::*;
+    /// use read_lines_into::traits::*;
     /// 
     /// let file: File = File::open("example.txt").unwrap();
     /// let mut buf_reader = BufReader::new(file);

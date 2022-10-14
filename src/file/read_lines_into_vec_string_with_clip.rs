@@ -8,7 +8,7 @@ impl ReadLinesIntoStringsWithClipOnSelf for File {
     /// 
     /// ```
     /// use std::fs::File;
-    /// use read_lines_into_string::traits::*;
+    /// use read_lines_into::traits::*;
     /// 
     /// let file: File = File::open("example.txt").unwrap();
     /// let strings: Vec<String> = file.read_lines_into_vec_string_with_clip().unwrap();

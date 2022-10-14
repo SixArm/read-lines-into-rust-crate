@@ -1,12 +1,12 @@
-//! # read_lines_into_string Rust crate
+//! # read_lines_into Rust crate
 //! 
-//! Read lines (from a Path or File etc.) into a String or Vec<String>.
+//! Read lines (from Path, File, BufRead) into a struct (String, Vec<String>).
 //! 
 //! Examples:
 //! 
 //! ```rust
 //! use std::path::Path;
-//! use read_lines_into_string::traits::*;
+//! use read_lines_into::traits::*;
 //! 
 //! // Choose any existing text file
 //! let path = Path::new("example.txt");
@@ -20,11 +20,11 @@
 //! 
 //! ## Install
 //! 
-//! You can use this Rust crate:
+//! Add dependency:
 //! 
 //! ```toml
 //! [dependencies]
-//! read_lines_from_file_into_string = "*"
+//! read_lines_into = "*"
 //! ```
 //! 
 //! ## Notes
@@ -44,7 +44,6 @@
 //! Windows systems typically end text lines with `\r` CARRIAGE RETURN (CR)
 //! then `\n` LINE FEED (LF).
 //! 
-//! 
 //! ## Tests
 //! 
 //! Test files have 3 content variations:
@@ -55,11 +54,11 @@
 //!
 //! ## Tracking
 //! 
-//! * Project: file-lines-into-string-rust-crate
-//! * Version: 2.0.0
+//! * Project: read-lines-into-rust-crate
+//! * Version: 1.0.0
 //! * Created: 2022-10-01T22:58:34Z
-//! * Updated: 2022-10-12T21:56:45Z
-//! * Website: https://github.com/sixarm/file-into-string-rust-crate
+//! * Updated: 2022-10-14T01:07:18Z
+//! * Website: https://github.com/sixarm/read-lines-into-rust-crate
 //! * Contact: Joel Parker Henderson <joel@joelparkerhenderson.com>
 //! * License: MIT OR Apache-2.0 OR GPL-2.0 OR GPL-3.0
 

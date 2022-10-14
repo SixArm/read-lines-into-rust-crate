@@ -9,7 +9,7 @@ impl ReadLinesIntoStringsWithClipOnRefSelf for Path {
     /// ```
     /// use std::path::Path;
     /// use std::fs::File;
-    /// use read_lines_into_string::traits::*;
+    /// use read_lines_into::traits::*;
     /// 
     /// let path = Path::new("example.txt");
     /// let strings: Vec<String> = path.read_lines_into_vec_string_with_clip().unwrap();

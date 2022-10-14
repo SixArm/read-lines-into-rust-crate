@@ -1,45 +1,29 @@
-# read_lines_from_file_into_string Rust crate
+# read_lines_into Rust crate
 
-Read a typical text file into a string or vector of strings.
+Read lines (from Path, File, BufRead) into a struct (String, Vec<String>).
 
 Example:
 
 ```rust
-use std::fs::File;
-use read_lines_from_file_into_string::*;
-
-// Open an existing text file.
-let file = File::open("example.txt").unwrap();
-
-// Read the File lines into a String.
-let string = read_lines_from_file_into_string(file).unwrap();
+// Choose any existing text file
+let path = Path::new("example.txt");
+ 
+// Read lines from the path's file into a string
+let string = path.read_lines_into_string().unwrap();
+ 
+// Read lines from the path's file into a vector of strings
+let strings = path.read_lines_into_vec_string().unwrap();
 ```
-
-## Functions
-
-* `read_lines_from_file_into_string(file: File) -> std::io::Result<String>`
-
-* `read_lines_from_file_into_string_with_clip(file: File) -> std::io::Result<String>`
-
-* `read_lines_from_file_into_string_with_trim(file: File) -> std::io::Result<String>`
-
-* `read_lines_from_file_into_vec_string(file: File) -> std::io::Result<Vec<String>>`
-
-* `read_lines_from_file_into_vec_string_with_clip(file: File) -> std::io::Result<Vec<String>>`
-
-* `read_lines_from_file_into_vec_string_trip(file: File) -> std::io::Result<Vec<String>>`
 
 
 ## Install
 
-You can use this Rust crate:
+Add dependency:
 
 ```toml
 [dependencies]
-read_lines_from_file_into_string = "*"
+read_lines_into = "*"
 ```
-
-Or if you prefer, you can copy the source code into your own program.
 
 ## Notes
 
@@ -85,10 +69,10 @@ Rust `std::fs::read_to_string(file_name).unwrap().lines()`.
 
 ## Tracking
 
-* Project: file-into-string-rust-crate
-* Version: 1.1.1
+* Project: read-lines-into-rust-crate
+* Version: 1.0.0
 * Created: 2022-10-01T22:58:34Z
-* Updated: 2022-10-12T21:56:45Z
-* Website: https://github.com/sixarm/file-into-string-rust-crate
+* Updated: 2022-10-14T01:07:18Z
+* Website: https://github.com/sixarm/read-lines-into-rust-crate
 * Contact: Joel Parker Henderson <joel@joelparkerhenderson.com>
 * License: MIT OR Apache-2.0 OR GPL-2.0 OR GPL-3.0
