@@ -1,0 +1,20 @@
+cff-version: 1.2.0
+title: read_lines_into Rust crate
+message: >-
+  If you use this work and you want to cite it,
+  then you can use the metadata from this file.
+type: software
+authors:
+  - given-names: Joel Parker
+    family-names: Henderson
+    email: joel@joelparkerhenderson.com
+    affiliation: joelparkerhenderson.com
+    orcid: 'https://orcid.org/0009-0000-4681-282X'
+identifiers:
+  - type: url
+    value: 'https://github.com/SixArm/read-lines-into-rust-crate/'
+    description: read_lines_into Rust crate
+repository-code: 'https://github.com/SixArm/read-lines-into-rust-crate/'
+abstract: >-
+  read_lines_into Rust crate
+license: See license file
